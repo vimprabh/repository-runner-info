@@ -1,0 +1,36 @@
+name: Repository and Runner Details
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  repository-details:
+    name: Display repository details
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display repository, branch, trigger user, and commit
+        shell: bash
+        env:
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          TRIGGERED_BY: ${{ github.triggering_actor }}
+          COMMIT_ID: ${{ github.sha }}
+        run: |
+          printf 'Repository: %s\n' "$REPOSITORY"
+          printf 'Branch: %s\n' "$BRANCH"
+          printf 'Triggered by: %s\n' "$TRIGGERED_BY"
+          printf 'Commit ID: %s\n' "$COMMIT_ID"
+
+  runner-details:
+    name: Display runner details
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display the runner executing this job
+        shell: bash
+        run: |
+          printf 'Runner name: %s\n' "$RUNNER_NAME"
+          printf 'Operating system: %s\n' "$RUNNER_OS"
+          printf 'Architecture: %s\n' "$RUNNER_ARCH"
+          printf 'Runner environment: %s\n' "$RUNNER_ENVIRONMENT"
